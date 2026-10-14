@@ -1,0 +1,94 @@
+<%- include('partials/header') %>
+
+<main class="py-16 flex-1">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header Page -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-xs uppercase font-extrabold tracking-widest text-indigo-400">Tulisan & Pemikiran</span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Artikel & Tutorial Blog</h1>
+      <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+        Kumpulan catatan perjalanan seputar arsitektur web, tren teknologi, tips pemrograman, dan pengalaman industri.
+      </p>
+
+      <% if (selectedTag) { %>
+        <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs">
+          <span>Menampilkan tag: <strong><%= selectedTag %></strong></span>
+          <a href="/blog" class="hover:text-white transition ml-1"><i class="fa-solid fa-xmark"></i></a>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Blogs Grid -->
+    <% if (blogs.length === 0) { %>
+      <div class="text-center py-20 bg-slate-900/50 rounded-3xl border border-slate-800">
+        <i class="fa-regular fa-newspaper text-4xl text-slate-600 mb-4 block"></i>
+        <h3 class="text-lg font-bold text-slate-300">Belum Ada Artikel</h3>
+        <p class="text-slate-500 text-sm mt-1">Belum ada tulisan yang dipublikasikan saat ini.</p>
+        <a href="/blog" class="mt-4 inline-block px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700 transition">
+          Kembali ke Semua Artikel
+        </a>
+      </div>
+    <% } else { %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% blogs.forEach(blog => { %>
+          <article class="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition duration-300 flex flex-col shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-1">
+            <!-- Cover Image -->
+            <a href="/blog/<%= blog.slug %>" class="block relative h-48 overflow-hidden bg-slate-800">
+              <img 
+                src="<%= blog.cover_image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80' %>" 
+                alt="<%= blog.title %>" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80'"
+              >
+            </a>
+
+            <!-- Content Body -->
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <!-- Metadata -->
+                <div class="flex items-center gap-2 text-xs text-slate-400 mb-3">
+                  <span><i class="fa-regular fa-clock mr-1 text-indigo-400"></i> <%= blog.read_time || '3 min read' %></span>
+                  <span>•</span>
+                  <span><%= new Date(blog.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition leading-snug line-clamp-2">
+                  <a href="/blog/<%= blog.slug %>">
+                    <%= blog.title %>
+                  </a>
+                </h3>
+
+                <!-- Excerpt -->
+                <p class="text-slate-400 text-sm mt-3 line-clamp-3 leading-relaxed">
+                  <%= blog.excerpt %>
+                </p>
+              </div>
+
+              <!-- Footer info & tags -->
+              <div class="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between">
+                <div class="flex flex-wrap gap-1">
+                  <% (blog.tags || '').split(',').slice(0, 2).forEach(t => { %>
+                    <a href="/blog?tag=<%= encodeURIComponent(t.trim()) %>" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:text-indigo-300 transition">
+                      #<%= t.trim() %>
+                    </a>
+                  <% }) %>
+                </div>
+
+                <a href="/blog/<%= blog.slug %>" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition">
+                  <span>Baca</span>
+                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+              </div>
+
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } %>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

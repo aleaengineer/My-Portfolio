@@ -1,0 +1,144 @@
+<%- include('../partials/admin-header') %>
+
+<div class="max-w-3xl mx-auto space-y-6">
+  
+  <!-- Header -->
+  <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div>
+      <h1 class="text-2xl font-extrabold text-white"><%= isEdit ? 'Edit Proyek' : 'Tambah Proyek Baru' %></h1>
+      <p class="text-slate-400 text-xs mt-1">Isi formulir di bawah ini untuk <%= isEdit ? 'memperbarui' : 'menambahkan' %> proyek di portofolio.</p>
+    </div>
+    <a href="/admin/projects" class="text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Daftar
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+    <form action="<%= isEdit ? '/admin/projects/edit/' + project.id : '/admin/projects/new' %>" method="POST" class="space-y-6">
+      
+      <!-- Title -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Judul Proyek *</label>
+        <input 
+          type="text" 
+          name="title" 
+          required 
+          value="<%= isEdit ? project.title : '' %>"
+          placeholder="Contoh: Platform E-Commerce Modern"
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+        >
+      </div>
+
+      <!-- Category & Tags -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Kategori *</label>
+          <input 
+            type="text" 
+            name="category" 
+            required 
+            value="<%= isEdit ? project.category : 'Web App' %>"
+            placeholder="Web App, Mobile App, UI/UX, dsb."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Tags / Teknologi</label>
+          <input 
+            type="text" 
+            name="tags" 
+            value="<%= isEdit ? project.tags : '' %>"
+            placeholder="Node.js, Express, React, Tailwind (pisahkan koma)"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Deskripsi Proyek *</label>
+        <textarea 
+          name="description" 
+          rows="4" 
+          required 
+          placeholder="Jelaskan gambaran umum proyek, fitur utama, dan tujuan pembuatannya..."
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+        ><%= isEdit ? project.description : '' %></textarea>
+      </div>
+
+      <!-- Image URL -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">URL Gambar Sampul (Cover Image)</label>
+        <input 
+          type="url" 
+          name="image_url" 
+          value="<%= isEdit ? project.image_url : '' %>"
+          placeholder="https://images.unsplash.com/..."
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+        >
+        <p class="text-[11px] text-slate-500 mt-1">Dapat menggunakan tautan gambar online seperti Unsplash atau CDN lainnya.</p>
+      </div>
+
+      <!-- URLs: Demo & GitHub -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">URL Live Demo (Opsional)</label>
+          <input 
+            type="url" 
+            name="demo_url" 
+            value="<%= isEdit ? project.demo_url : '' %>"
+            placeholder="https://myproject.com"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">URL Kode Sumber GitHub (Opsional)</label>
+          <input 
+            type="url" 
+            name="github_url" 
+            value="<%= isEdit ? project.github_url : '' %>"
+            placeholder="https://github.com/username/repo"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <!-- Featured Toggle -->
+      <div class="pt-2">
+        <label class="inline-flex items-center gap-3 cursor-pointer">
+          <input 
+            type="checkbox" 
+            name="featured" 
+            value="1" 
+            <%= (isEdit && project.featured) ? 'checked' : '' %>
+            class="w-5 h-5 rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900"
+          >
+          <span class="text-sm font-medium text-slate-200">
+            Tampilkan sebagai Proyek Unggulan (Featured) di Halaman Beranda
+          </span>
+        </label>
+      </div>
+
+      <!-- Submit & Cancel Buttons -->
+      <div class="pt-6 border-t border-slate-800 flex items-center justify-end gap-3">
+        <a href="/admin/projects" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition">
+          Batal
+        </a>
+        <button 
+          type="submit" 
+          class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5"
+        >
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span><%= isEdit ? 'Simpan Perubahan' : 'Terbitkan Proyek' %></span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+</main>
+</body>
+</html>

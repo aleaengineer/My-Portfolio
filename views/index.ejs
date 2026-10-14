@@ -1,0 +1,347 @@
+<%- include('partials/header') %>
+
+<!-- Flash Notification if any -->
+<% if (flash) { %>
+  <div class="max-w-4xl mx-auto px-4 mt-6">
+    <div class="p-4 rounded-xl flex items-center gap-3 text-sm font-medium border <%= flash.type === 'success' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' : 'bg-rose-500/10 text-rose-300 border-rose-500/30' %>">
+      <i class="fa-solid <%= flash.type === 'success' ? 'fa-circle-check text-emerald-400 text-lg' : 'fa-circle-exclamation text-rose-400 text-lg' %>"></i>
+      <span><%= flash.message %></span>
+    </div>
+  </div>
+<% } %>
+
+<!-- Hero Section -->
+<section class="relative pt-12 pb-20 md:py-28 overflow-hidden">
+  <!-- Background Glow Elements -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] bg-indigo-600/15 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-purple-600/15 blur-[100px] rounded-full pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Text Info (7 cols) -->
+      <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+        <!-- Availability Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold tracking-wide shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Tersedia untuk Proyek & Kolaborasi</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+          Halo, saya <span class="gradient-text"><%= settings.owner_name || 'Farhan Ale' %></span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg sm:text-xl font-medium text-indigo-200/90 max-w-2xl">
+          <%= settings.tagline || 'Network Engineer & Security Engineer' %>
+        </p>
+
+        <!-- Bio description -->
+        <p class="text-base text-slate-300 max-w-2xl leading-relaxed">
+          <%= settings.bio || 'Membangun infrastruktur jaringan yang andal dan mengamankan sistem digital dari potensi serangan siber.' %>
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          <a href="#projects" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 flex items-center gap-2 transition hover:-translate-y-0.5">
+            <i class="fa-solid fa-layer-group text-sm"></i>
+            <span>Jelajahi Proyek</span>
+          </a>
+          <a href="#contact" class="px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-sm border border-slate-700/80 flex items-center gap-2 transition hover:-translate-y-0.5 shadow-sm">
+            <i class="fa-solid fa-paper-plane text-sm text-indigo-400"></i>
+            <span>Hubungi Saya</span>
+          </a>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="pt-4 flex items-center justify-center lg:justify-start gap-3">
+          <span class="text-xs uppercase font-bold text-slate-400 tracking-wider mr-2">Ikuti:</span>
+          <% if (settings.github_url) { %>
+            <a href="<%= settings.github_url %>" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 transition">
+              <i class="fa-brands fa-github text-lg"></i>
+            </a>
+          <% } %>
+          <% if (settings.linkedin_url) { %>
+            <a href="<%= settings.linkedin_url %>" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-slate-700 transition">
+              <i class="fa-brands fa-linkedin text-lg"></i>
+            </a>
+          <% } %>
+          <% if (settings.twitter_url) { %>
+            <a href="<%= settings.twitter_url %>" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 transition">
+              <i class="fa-brands fa-x-twitter text-lg"></i>
+            </a>
+          <% } %>
+          <% if (settings.email) { %>
+            <a href="mailto:<%= settings.email %>" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:border-slate-700 transition">
+              <i class="fa-solid fa-envelope text-lg"></i>
+            </a>
+          <% } %>
+        </div>
+
+      </div>
+
+      <!-- Avatar Card (5 cols) -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative group">
+          <!-- Ambient glowing border -->
+          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-75 transition duration-500"></div>
+          
+          <div class="relative bg-slate-900 border border-slate-800 p-3 rounded-3xl overflow-hidden max-w-xs shadow-2xl">
+            <img 
+              src="<%= settings.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80' %>" 
+              alt="<%= settings.owner_name || 'Farhan Ale' %>" 
+              class="w-72 h-80 object-cover rounded-2xl group-hover:scale-[1.02] transition duration-300"
+              onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=80'"
+            >
+            <!-- Badge overlay -->
+            <div class="absolute bottom-6 left-6 right-6 bg-slate-900/90 backdrop-blur-md border border-slate-700/60 p-3 rounded-xl shadow-lg">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-slate-400">Pengalaman & Spesialisasi</div>
+                  <div class="text-sm font-bold text-white"><%= settings.tagline || 'Network Engineer & Security Engineer' %></div>
+                </div>
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Skills & Technologies -->
+<section class="py-14 border-y border-slate-800/80 bg-slate-900/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-xl mx-auto mb-8">
+      <h2 class="text-xs uppercase font-extrabold tracking-widest text-indigo-400">Keahlian & Tools</h2>
+      <p class="text-2xl font-bold text-white mt-1">Teknologi yang Saya Kuasai</p>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <% skillsList.forEach(skill => { %>
+        <div class="px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-slate-200 text-sm font-medium flex items-center gap-2 shadow-sm transition hover:scale-105">
+          <i class="fa-solid fa-circle-check text-indigo-400 text-xs"></i>
+          <span><%= skill %></span>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section id="projects" class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-400">Portofolio Pilihan</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Proyek Terkini & Unggulan</h2>
+        <p class="text-slate-400 text-sm mt-1">Karya pilihan dalam pengembangan web, sistem aplikasi, dan antarmuka.</p>
+      </div>
+      <a href="/projects" class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition">
+        <span>Lihat Semua Proyek (<%= totalProjectsCount %>)</span>
+        <i class="fa-solid fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% featuredProjects.forEach(project => { %>
+        <div class="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition duration-300 flex flex-col shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-1">
+          <!-- Project Cover Image -->
+          <div class="relative h-48 overflow-hidden bg-slate-800">
+            <img 
+              src="<%= project.image_url || 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80' %>" 
+              alt="<%= project.title %>" 
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              onerror="this.src='https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80'"
+            >
+            <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 backdrop-blur text-indigo-300 border border-indigo-500/30">
+              <%= project.category %>
+            </span>
+          </div>
+
+          <!-- Project Body -->
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition">
+                <%= project.title %>
+              </h3>
+              <p class="text-slate-400 text-sm mt-2 leading-relaxed line-clamp-3">
+                <%= project.description %>
+              </p>
+            </div>
+
+            <div class="pt-6 mt-4 border-t border-slate-800 flex items-center justify-between">
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1.5">
+                <% (project.tags || '').split(',').slice(0, 3).forEach(tag => { %>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
+                    <%= tag.trim() %>
+                  </span>
+                <% }) %>
+              </div>
+
+              <!-- Links -->
+              <div class="flex items-center gap-2">
+                <% if (project.github_url) { %>
+                  <a href="<%= project.github_url %>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition" title="Kode Sumber">
+                    <i class="fa-brands fa-github text-sm"></i>
+                  </a>
+                <% } %>
+                <% if (project.demo_url) { %>
+                  <a href="<%= project.demo_url %>" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white flex items-center justify-center transition" title="Live Demo">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                  </a>
+                <% } %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+  </div>
+</section>
+
+<!-- Latest Blogs Section -->
+<section class="py-20 bg-slate-900/40 border-t border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <span class="text-xs uppercase font-extrabold tracking-wider text-indigo-400">Artikel & Catatan</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Tulisan & Tutorial Terbaru</h2>
+        <p class="text-slate-400 text-sm mt-1">Berbagi pengetahuan, pengalaman teknis, dan insight seputar pemrograman.</p>
+      </div>
+      <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition">
+        <span>Lihat Semua Artikel</span>
+        <i class="fa-solid fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+
+    <!-- Blogs Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <% recentBlogs.forEach(blog => { %>
+        <article class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition duration-300 flex flex-col sm:flex-row group">
+          <div class="sm:w-2/5 h-48 sm:h-auto overflow-hidden bg-slate-800 relative">
+            <img 
+              src="<%= blog.cover_image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80' %>" 
+              alt="<%= blog.title %>" 
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80'"
+            >
+          </div>
+          <div class="p-6 sm:w-3/5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 text-xs text-slate-400 mb-2">
+                <span><i class="fa-regular fa-clock mr-1 text-indigo-400"></i> <%= blog.read_time || '3 min read' %></span>
+                <span>•</span>
+                <span><%= new Date(blog.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition leading-snug line-clamp-2">
+                <a href="/blog/<%= blog.slug %>">
+                  <%= blog.title %>
+                </a>
+              </h3>
+              <p class="text-slate-400 text-sm mt-2 line-clamp-2 leading-relaxed">
+                <%= blog.excerpt %>
+              </p>
+            </div>
+            <div class="mt-4 pt-3 flex items-center justify-between border-t border-slate-800/80">
+              <a href="/blog/<%= blog.slug %>" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 transition">
+                <span>Baca Selengkapnya</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick Contact Form Section -->
+<section id="contact" class="py-20 relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-gradient-to-br from-slate-900 to-slate-900/90 border border-slate-800 p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+      <!-- Glow -->
+      <div class="absolute -top-24 -right-24 w-60 h-60 bg-indigo-600/20 blur-[80px] rounded-full pointer-events-none"></div>
+
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span class="text-xs uppercase font-extrabold tracking-widest text-indigo-400">Mari Terhubung</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Kirim Pesan Langsung</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Punya tawaran proyek, pertanyaan, atau sekadar ingin bertegur sapa? Jangan ragu mengirimkan pesan melalui formulir berikut.
+        </p>
+      </div>
+
+      <form action="/contact" method="POST" class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nama Lengkap</label>
+            <input 
+              type="text" 
+              name="name" 
+              required 
+              placeholder="Contoh: Budi Santoso"
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+            >
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Alamat Email</label>
+            <input 
+              type="email" 
+              name="email" 
+              required 
+              placeholder="nama@email.com"
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Subjek Pesan</label>
+          <input 
+            type="text" 
+            name="subject" 
+            required 
+            placeholder="Contoh: Diskusi Proyek Website Company Profile"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Isi Pesan</label>
+          <textarea 
+            name="message" 
+            rows="4" 
+            required 
+            placeholder="Tuliskan detail pesan Anda di sini..."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          ></textarea>
+        </div>
+
+        <div class="text-center pt-2">
+          <button 
+            type="submit" 
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition hover:-translate-y-0.5 inline-flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>Kirim Pesan Sekarang</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

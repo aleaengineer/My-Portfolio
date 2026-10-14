@@ -1,0 +1,313 @@
+<%- include('../partials/admin-header') %>
+
+<div class="max-w-4xl mx-auto space-y-10">
+  
+  <!-- Header -->
+  <div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Pengaturan Profil & Website</h1>
+    <p class="text-slate-400 text-xs sm:text-sm mt-1">Perbarui informasi biodata, keahlian teknis, kontak, media sosial, serta kata sandi akun admin Anda.</p>
+  </div>
+
+  <!-- Section 1: Profile & Site Info -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+    <div class="flex items-center gap-3 pb-6 border-b border-slate-800 mb-6">
+      <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center text-lg">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold text-white">Informasi Profil & Portofolio</h2>
+        <p class="text-xs text-slate-400">Informasi ini akan langsung tampil di beranda dan halaman publik website Anda.</p>
+      </div>
+    </div>
+
+    <form action="/admin/settings" method="POST" enctype="multipart/form-data" class="space-y-6">
+      
+      <!-- Foto Hero / Avatar Management Section -->
+      <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400 mb-3">
+          <i class="fa-solid fa-image mr-1.5"></i> Foto Hero & Profil (Avatar)
+        </label>
+        
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+          <!-- Preview Box -->
+          <div class="relative group shrink-0">
+            <div class="w-32 h-36 rounded-2xl overflow-hidden bg-slate-900 border-2 border-slate-700/80 shadow-md">
+              <img 
+                id="avatar-preview" 
+                src="<%= settings.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80' %>" 
+                alt="Foto Profil Hero" 
+                class="w-full h-full object-cover"
+                onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=600&q=80'"
+              >
+            </div>
+            <span class="block text-[11px] text-center text-slate-400 mt-2">Preview Foto</span>
+          </div>
+
+          <!-- Upload Controls -->
+          <div class="flex-1 space-y-4 w-full">
+            <!-- File Upload Input -->
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">
+                Opsi 1: Upload File Gambar dari Perangkat (Laptop/HP)
+              </label>
+              <input 
+                type="file" 
+                name="avatar_file" 
+                id="avatar_file_input" 
+                accept="image/*"
+                class="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:cursor-pointer cursor-pointer bg-slate-900 border border-slate-800 rounded-xl"
+              >
+              <p class="text-[11px] text-slate-500 mt-1">Mendukung format JPG, PNG, WEBP, atau GIF (Maks. 10MB).</p>
+            </div>
+
+            <!-- Image URL Input -->
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">
+                Opsi 2: Atau Gunakan URL Gambar Online
+              </label>
+              <input 
+                type="url" 
+                name="avatar_url" 
+                id="avatar_url_input" 
+                value="<%= settings.avatar_url || '' %>"
+                placeholder="https://images.unsplash.com/... atau /uploads/..."
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Site Title & Owner Name -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Judul Website</label>
+          <input 
+            type="text" 
+            name="site_title" 
+            value="<%= settings.site_title || '' %>"
+            placeholder="Portfolio Farhan Ale"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nama Lengkap Pengembang</label>
+          <input 
+            type="text" 
+            name="owner_name" 
+            value="<%= settings.owner_name || '' %>"
+            placeholder="Farhan Ale"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <!-- Tagline / Profesi -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Tagline / Profesi</label>
+        <input 
+          type="text" 
+          name="tagline" 
+          value="<%= settings.tagline || '' %>"
+          placeholder="Network Engineer & Security Engineer"
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm font-medium"
+        >
+      </div>
+
+      <!-- Bio -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Bio / Tentang Diri</label>
+        <textarea 
+          name="bio" 
+          rows="4" 
+          placeholder="Tuliskan biografi profesional singkat Anda..."
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm leading-relaxed"
+        ><%= settings.bio || '' %></textarea>
+      </div>
+
+      <!-- Skills -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Daftar Keahlian & Teknologi (Pisahkan dengan koma)</label>
+        <input 
+          type="text" 
+          name="skills" 
+          value="<%= settings.skills || '' %>"
+          placeholder="Node.js, Express, JavaScript, TypeScript, React, Tailwind CSS, PostgreSQL, SQLite, Git"
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm font-mono text-xs"
+        >
+      </div>
+
+      <!-- Contact Details -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Email Publik</label>
+          <input 
+            type="email" 
+            name="email" 
+            value="<%= settings.email || '' %>"
+            placeholder="kontak@domain.com"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nomor Telepon / WA</label>
+          <input 
+            type="text" 
+            name="phone" 
+            value="<%= settings.phone || '' %>"
+            placeholder="+62 812-3456-7890"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Lokasi / Kota</label>
+          <input 
+            type="text" 
+            name="location" 
+            value="<%= settings.location || '' %>"
+            placeholder="Jakarta, Indonesia"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <!-- Social Media URLs -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2"><i class="fa-brands fa-github text-slate-400 mr-1"></i> URL GitHub</label>
+          <input 
+            type="url" 
+            name="github_url" 
+            value="<%= settings.github_url || '' %>"
+            placeholder="https://github.com/..."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2"><i class="fa-brands fa-linkedin text-blue-400 mr-1"></i> URL LinkedIn</label>
+          <input 
+            type="url" 
+            name="linkedin_url" 
+            value="<%= settings.linkedin_url || '' %>"
+            placeholder="https://linkedin.com/in/..."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2"><i class="fa-brands fa-x-twitter text-slate-400 mr-1"></i> URL Twitter / X</label>
+          <input 
+            type="url" 
+            name="twitter_url" 
+            value="<%= settings.twitter_url || '' %>"
+            placeholder="https://twitter.com/..."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800 flex justify-end">
+        <button 
+          type="submit" 
+          class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5"
+        >
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span>Simpan Pengaturan Profil</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Section 2: Change Password -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+    <div class="flex items-center gap-3 pb-6 border-b border-slate-800 mb-6">
+      <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-lg">
+        <i class="fa-solid fa-key"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold text-white">Ganti Kata Sandi Akun Admin</h2>
+        <p class="text-xs text-slate-400">Pastikan menggunakan kombinasi kata sandi yang aman untuk melindungi panel admin Anda.</p>
+      </div>
+    </div>
+
+    <form action="/admin/settings/password" method="POST" class="space-y-6 max-w-xl">
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Password Saat Ini</label>
+        <input 
+          type="password" 
+          name="current_password" 
+          required 
+          placeholder="Password saat ini (default: admin123)"
+          class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+        >
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Password Baru</label>
+          <input 
+            type="password" 
+            name="new_password" 
+            required 
+            placeholder="Password baru"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Konfirmasi Password Baru</label>
+          <input 
+            type="password" 
+            name="confirm_password" 
+            required 
+            placeholder="Ulangi password baru"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+          >
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button 
+          type="submit" 
+          class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs shadow-md shadow-amber-600/30 transition flex items-center gap-1.5"
+        >
+          <i class="fa-solid fa-shield-halved text-xs"></i>
+          <span>Perbarui Kata Sandi</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  // Live image preview handler
+  const avatarFileInput = document.getElementById('avatar_file_input');
+  const avatarUrlInput = document.getElementById('avatar_url_input');
+  const avatarPreview = document.getElementById('avatar-preview');
+
+  if (avatarFileInput && avatarPreview) {
+    avatarFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          avatarPreview.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  if (avatarUrlInput && avatarPreview) {
+    avatarUrlInput.addEventListener('input', function(e) {
+      const url = e.target.value.trim();
+      if (url) {
+        avatarPreview.src = url;
+      }
+    });
+  }
+</script>
+
+</main>
+</body>
+</html>

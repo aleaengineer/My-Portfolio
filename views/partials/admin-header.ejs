@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>Admin Panel</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <!-- Admin Navbar Header -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Left: Logo & Admin Tag -->
+        <div class="flex items-center gap-4">
+          <a href="/admin" class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-md">
+              <i class="fa-solid fa-shield-halved text-sm"></i>
+            </div>
+            <div>
+              <span class="font-bold text-white tracking-tight">Admin Hub</span>
+              <span class="text-[10px] block text-indigo-400 font-semibold uppercase tracking-wider">Portfolio Management</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Center: Admin Navigation links -->
+        <nav class="hidden md:flex items-center space-x-1">
+          <a href="/admin" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath === '/admin' || currentPath === '/' ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' %>">
+            <i class="fa-solid fa-chart-pie mr-1.5 text-xs"></i> Ringkasan
+          </a>
+          <a href="/admin/projects" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/admin/projects') || currentPath.startsWith('/projects') ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' %>">
+            <i class="fa-solid fa-folder-tree mr-1.5 text-xs"></i> Proyek
+          </a>
+          <a href="/admin/blogs" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/admin/blogs') || currentPath.startsWith('/blogs') ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' %>">
+            <i class="fa-solid fa-pen-nib mr-1.5 text-xs"></i> Blog
+          </a>
+          <a href="/admin/messages" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/admin/messages') || currentPath.startsWith('/messages') ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' %>">
+            <i class="fa-solid fa-inbox mr-1.5 text-xs"></i> Pesan Masuk
+          </a>
+          <a href="/admin/settings" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/admin/settings') || currentPath.startsWith('/settings') ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' %>">
+            <i class="fa-solid fa-gear mr-1.5 text-xs"></i> Pengaturan
+          </a>
+        </nav>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center gap-2">
+          <a href="/" target="_blank" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition flex items-center gap-1.5 border border-slate-700">
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            <span class="hidden sm:inline">Lihat Web</span>
+          </a>
+          <a href="/admin/logout" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+            <span class="hidden sm:inline">Logout</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Sub-Navigation -->
+    <div class="md:hidden border-t border-slate-800/80 px-2 py-2 flex items-center justify-around bg-slate-900 overflow-x-auto text-xs">
+      <a href="/admin" class="p-2 text-center rounded <%= currentPath === '/admin' ? 'text-indigo-400 font-semibold' : 'text-slate-400' %>">
+        <i class="fa-solid fa-chart-pie block text-sm mb-1"></i> Dashboard
+      </a>
+      <a href="/admin/projects" class="p-2 text-center rounded <%= currentPath.startsWith('/admin/projects') ? 'text-indigo-400 font-semibold' : 'text-slate-400' %>">
+        <i class="fa-solid fa-folder-tree block text-sm mb-1"></i> Proyek
+      </a>
+      <a href="/admin/blogs" class="p-2 text-center rounded <%= currentPath.startsWith('/admin/blogs') ? 'text-indigo-400 font-semibold' : 'text-slate-400' %>">
+        <i class="fa-solid fa-pen-nib block text-sm mb-1"></i> Blog
+      </a>
+      <a href="/admin/messages" class="p-2 text-center rounded <%= currentPath.startsWith('/admin/messages') ? 'text-indigo-400 font-semibold' : 'text-slate-400' %>">
+        <i class="fa-solid fa-inbox block text-sm mb-1"></i> Pesan
+      </a>
+      <a href="/admin/settings" class="p-2 text-center rounded <%= currentPath.startsWith('/admin/settings') ? 'text-indigo-400 font-semibold' : 'text-slate-400' %>">
+        <i class="fa-solid fa-gear block text-sm mb-1"></i> Setting
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Flash Messages -->
+    <% if (typeof flash !== 'undefined' && flash) { %>
+      <div class="mb-6 p-4 rounded-xl flex items-center gap-3 text-sm font-medium border <%= flash.type === 'success' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' : 'bg-rose-500/10 text-rose-300 border-rose-500/30' %>">
+        <i class="fa-solid <%= flash.type === 'success' ? 'fa-circle-check text-emerald-400 text-lg' : 'fa-circle-exclamation text-rose-400 text-lg' %>"></i>
+        <span><%= flash.message %></span>
+      </div>
+    <% } %>

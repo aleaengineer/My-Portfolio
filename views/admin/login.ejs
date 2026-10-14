@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="w-full max-w-md">
+    
+    <!-- Header Logo -->
+    <div class="text-center mb-8">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30 mb-4">
+        <i class="fa-solid fa-lock text-2xl"></i>
+      </div>
+      <h1 class="text-2xl font-extrabold text-white">Login Panel Admin</h1>
+      <p class="text-slate-400 text-xs mt-1">Masuk untuk mengelola portofolio, artikel, dan pesan masuk</p>
+    </div>
+
+    <!-- Card Form -->
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+      
+      <!-- Flash Alert -->
+      <% if (flash) { %>
+        <div class="mb-6 p-4 rounded-xl flex items-center gap-3 text-xs font-medium border <%= flash.type === 'success' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' : 'bg-rose-500/10 text-rose-300 border-rose-500/30' %>">
+          <i class="fa-solid <%= flash.type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-exclamation text-rose-400' %> text-base"></i>
+          <span><%= flash.message %></span>
+        </div>
+      <% } %>
+
+      <form action="/admin/login" method="POST" class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Username</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-solid fa-user text-sm"></i>
+            </span>
+            <input 
+              type="text" 
+              name="username" 
+              required 
+              placeholder="Username admin"
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <i class="fa-solid fa-key text-sm"></i>
+            </span>
+            <input 
+              type="password" 
+              name="password" 
+              required 
+              placeholder="••••••••"
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+            >
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition hover:-translate-y-0.5 flex items-center justify-center gap-2"
+        >
+          <i class="fa-solid fa-right-to-bracket text-xs"></i>
+          <span>Masuk ke Dashboard</span>
+        </button>
+      </form>
+
+      <div class="mt-6 text-center border-t border-slate-800/80 pt-4">
+        <a href="/" class="text-xs text-slate-400 hover:text-indigo-400 transition inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>Kembali ke Website Utama</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

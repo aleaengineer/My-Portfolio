@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %><%= settings.site_title || 'Portfolio' %></title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- Sticky Navbar -->
+  <header class="sticky top-0 z-50 glass-nav border-b border-slate-800/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition">
+            <span class="font-bold text-lg"><%= (settings.owner_name || 'FA').charAt(0) %></span>
+          </div>
+          <span class="font-bold text-lg tracking-tight group-hover:text-indigo-400 transition">
+            <%= settings.owner_name || 'Farhan Ale' %>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <a href="/" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath === '/' ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:text-white hover:bg-slate-800/50' %>">
+            <i class="fa-solid fa-house mr-1.5 text-xs opacity-70"></i> Beranda
+          </a>
+          <a href="/projects" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/projects') ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:text-white hover:bg-slate-800/50' %>">
+            <i class="fa-solid fa-code mr-1.5 text-xs opacity-70"></i> Proyek
+          </a>
+          <a href="/blog" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath.startsWith('/blog') ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:text-white hover:bg-slate-800/50' %>">
+            <i class="fa-solid fa-newspaper mr-1.5 text-xs opacity-70"></i> Blog
+          </a>
+          <a href="/contact" class="px-3 py-2 rounded-lg text-sm font-medium transition <%= currentPath === '/contact' ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:text-white hover:bg-slate-800/50' %>">
+            <i class="fa-solid fa-envelope mr-1.5 text-xs opacity-70"></i> Kontak
+          </a>
+        </nav>
+
+        <!-- Right Action Buttons -->
+        <div class="hidden md:flex items-center gap-3">
+          <% if (isLoggedIn) { %>
+            <a href="/admin" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition">
+              <i class="fa-solid fa-gauge"></i> Panel Admin
+            </a>
+          <% } else { %>
+            <a href="/admin/login" class="text-xs text-slate-400 hover:text-slate-200 transition px-2 py-1">
+              <i class="fa-solid fa-lock text-slate-500 mr-1"></i> Login Admin
+            </a>
+          <% } %>
+          <a href="/contact" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-md shadow-indigo-600/25 transition">
+            <span>Hubungi Saya</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/80 px-4 pt-3 pb-5 space-y-2 bg-slate-900/95 backdrop-blur-lg">
+      <a href="/" class="block px-3 py-2 rounded-lg text-base font-medium <%= currentPath === '/' ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:bg-slate-800' %>">
+        <i class="fa-solid fa-house mr-2 text-sm"></i> Beranda
+      </a>
+      <a href="/projects" class="block px-3 py-2 rounded-lg text-base font-medium <%= currentPath.startsWith('/projects') ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:bg-slate-800' %>">
+        <i class="fa-solid fa-code mr-2 text-sm"></i> Proyek
+      </a>
+      <a href="/blog" class="block px-3 py-2 rounded-lg text-base font-medium <%= currentPath.startsWith('/blog') ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:bg-slate-800' %>">
+        <i class="fa-solid fa-newspaper mr-2 text-sm"></i> Blog
+      </a>
+      <a href="/contact" class="block px-3 py-2 rounded-lg text-base font-medium <%= currentPath === '/contact' ? 'text-indigo-400 bg-indigo-950/60' : 'text-slate-300 hover:bg-slate-800' %>">
+        <i class="fa-solid fa-envelope mr-2 text-sm"></i> Kontak
+      </a>
+      <div class="pt-3 border-t border-slate-800 flex flex-col gap-2">
+        <% if (isLoggedIn) { %>
+          <a href="/admin" class="px-3 py-2 rounded-lg text-center font-semibold text-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+            <i class="fa-solid fa-gauge mr-1.5"></i> Masuk Panel Admin
+          </a>
+        <% } else { %>
+          <a href="/admin/login" class="px-3 py-2 rounded-lg text-center text-sm text-slate-400 hover:text-slate-200">
+            <i class="fa-solid fa-lock mr-1.5"></i> Login Admin
+          </a>
+        <% } %>
+        <a href="/contact" class="w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm shadow-md shadow-indigo-600/20">
+          Hubungi Saya
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        }
+      });
+    }
+  </script>

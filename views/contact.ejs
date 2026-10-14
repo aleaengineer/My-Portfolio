@@ -1,0 +1,169 @@
+<%- include('partials/header') %>
+
+<main class="py-16 flex-1">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Flash Notification if any -->
+    <% if (flash) { %>
+      <div class="max-w-3xl mx-auto mb-8">
+        <div class="p-4 rounded-xl flex items-center gap-3 text-sm font-medium border <%= flash.type === 'success' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' : 'bg-rose-500/10 text-rose-300 border-rose-500/30' %>">
+          <i class="fa-solid <%= flash.type === 'success' ? 'fa-circle-check text-emerald-400 text-lg' : 'fa-circle-exclamation text-rose-400 text-lg' %>"></i>
+          <span><%= flash.message %></span>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Header Page -->
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="text-xs uppercase font-extrabold tracking-widest text-indigo-400">Hubungi Saya</span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Mari Memulai Kolaborasi</h1>
+      <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+        Apakah Anda memiliki proyek baru, tawaran pekerjaan, atau sekadar ingin bertukar ide? Saya selalu terbuka untuk diskusi.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto items-start">
+      
+      <!-- Contact Info Cards (5 cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <h3 class="text-lg font-bold text-white">Informasi Kontak</h3>
+          
+          <div class="space-y-4 text-sm">
+            <% if (settings.email) { %>
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                  <span class="block text-xs text-slate-400">Email</span>
+                  <a href="mailto:<%= settings.email %>" class="text-white hover:text-indigo-400 transition font-medium">
+                    <%= settings.email %>
+                  </a>
+                </div>
+              </div>
+            <% } %>
+
+            <% if (settings.phone) { %>
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <span class="block text-xs text-slate-400">Telepon / WhatsApp</span>
+                  <span class="text-white font-medium"><%= settings.phone %></span>
+                </div>
+              </div>
+            <% } %>
+
+            <% if (settings.location) { %>
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <span class="block text-xs text-slate-400">Lokasi</span>
+                  <span class="text-white font-medium"><%= settings.location %></span>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Social Media Card -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+          <h4 class="text-xs uppercase font-bold text-slate-400 tracking-wider mb-4">Profil Media Sosial</h4>
+          <div class="grid grid-cols-3 gap-3">
+            <% if (settings.github_url) { %>
+              <a href="<%= settings.github_url %>" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-center transition flex flex-col items-center gap-1">
+                <i class="fa-brands fa-github text-xl"></i>
+                <span class="text-[11px] font-semibold">GitHub</span>
+              </a>
+            <% } %>
+            <% if (settings.linkedin_url) { %>
+              <a href="<%= settings.linkedin_url %>" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-blue-400 text-center transition flex flex-col items-center gap-1">
+                <i class="fa-brands fa-linkedin text-xl"></i>
+                <span class="text-[11px] font-semibold">LinkedIn</span>
+              </a>
+            <% } %>
+            <% if (settings.twitter_url) { %>
+              <a href="<%= settings.twitter_url %>" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-center transition flex flex-col items-center gap-1">
+                <i class="fa-brands fa-x-twitter text-xl"></i>
+                <span class="text-[11px] font-semibold">Twitter</span>
+              </a>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contact Form (7 cols) -->
+      <div class="lg:col-span-7">
+        <div class="p-8 sm:p-10 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+          <h3 class="text-xl font-bold text-white mb-6">Formulir Pesan</h3>
+          
+          <form action="/contact" method="POST" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nama Lengkap *</label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  required 
+                  placeholder="Nama Anda"
+                  class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+                >
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Alamat Email *</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  required 
+                  placeholder="email@domain.com"
+                  class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Subjek Pesan *</label>
+              <input 
+                type="text" 
+                name="subject" 
+                required 
+                placeholder="Topik atau judul pesan"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Isi Pesan *</label>
+              <textarea 
+                name="message" 
+                rows="5" 
+                required 
+                placeholder="Jelaskan kebutuhan, pertanyaan, atau detail proyek Anda..."
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition text-sm"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+              <span>Kirim Pesan Sekarang</span>
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>
