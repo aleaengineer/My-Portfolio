@@ -81,13 +81,21 @@
 
       </div>
 
-      <!-- Avatar Card (5 cols) -->
+      <!-- Avatar Card with Running Light Animation (5 cols) -->
       <div class="lg:col-span-5 flex justify-center">
-        <div class="relative group">
-          <!-- Ambient glowing border -->
-          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-75 transition duration-500"></div>
+        <div class="relative group p-[2.5px] rounded-[28px] overflow-hidden shadow-2xl">
           
-          <div class="relative bg-slate-900 border border-slate-800 p-3 rounded-3xl overflow-hidden max-w-xs shadow-2xl">
+          <!-- Running Light Glow (Cahaya berpendar mengitari bingkai) -->
+          <div class="running-border-glow"></div>
+          
+          <!-- Running Light Beam (Sinar laser tajam yang bergerak mengelilingi bingkai) -->
+          <div class="running-border-beam"></div>
+
+          <!-- Base border pembatas -->
+          <div class="absolute inset-0 rounded-[28px] border border-slate-800/80 pointer-events-none"></div>
+
+          <!-- Main Card Container -->
+          <div class="relative bg-slate-950 p-3 rounded-[26px] overflow-hidden max-w-xs z-10">
             <img 
               src="<%= settings.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80' %>" 
               alt="<%= settings.owner_name || 'Farhan Ale' %>" 
